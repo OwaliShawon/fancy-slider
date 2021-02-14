@@ -39,13 +39,13 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
+  element.classList.toggle('added');
 
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    element.classList.remove('added')
+    // element.classList.remove('added')
     sliders.pop(img);
   }
 }
@@ -71,7 +71,7 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
-  if (duration >= 0) {
+  if (duration > 0) {
     sliders.forEach(slide => {
       let item = document.createElement('div')
       item.className = "slider-item";
@@ -136,5 +136,5 @@ sliderBtn.addEventListener('click', function () {
 
 const toggleSpinner = () => {
   const spinner = document.getElementById('spinner');
-    spinner.classList.toggle('d-none'); 
+  spinner.classList.toggle('d-none');
 }
