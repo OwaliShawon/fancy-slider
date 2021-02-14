@@ -25,10 +25,11 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  toggleSpinner();
 }
 
 const getImages = (query) => {
+  toggleSpinner();
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -44,9 +45,11 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    element.classList.remove('added')
+    sliders.pop(img);
   }
 }
+
 var timer
 const createSlider = () => {
   // check slider image length
@@ -127,8 +130,11 @@ search.addEventListener("keypress", function (event) {
     searchBtn.click();
 });
 
-
-
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+const toggleSpinner = () => {
+  const spinner = document.getElementById('spinner');
+    spinner.classList.toggle('d-none'); 
+}
