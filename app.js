@@ -68,7 +68,7 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
-  if (duration >= 1000) {
+  if (duration >= 0) {
     sliders.forEach(slide => {
       let item = document.createElement('div')
       item.className = "slider-item";
@@ -84,7 +84,7 @@ const createSlider = () => {
     }, duration);
   }
   else {
-    alert('Minimum slider time is 1000ms or 1s')
+    alert('Minimum slider time is 1ms')
   }
 }
 
@@ -113,6 +113,7 @@ const changeSlide = (index) => {
 
   items[index].style.display = "block"
 }
+
 const search = document.getElementById('search');
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
@@ -122,10 +123,11 @@ searchBtn.addEventListener('click', function () {
 })
 
 search.addEventListener("keypress", function (event) {
-  event.preventDefault();
-  if (event.key == 'Enter')
+  if (event.key === 'Enter')
     searchBtn.click();
 });
+
+
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
