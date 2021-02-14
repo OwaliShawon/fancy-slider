@@ -4,9 +4,9 @@ const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
+
 // selected image 
 let sliders = [];
-
 
 // If this key doesn't work
 // Find the name in the url and go to their website
@@ -39,7 +39,7 @@ let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
- 
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
@@ -68,22 +68,25 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
-  if(duration > 999){
+  if (duration >= 1000) {
     sliders.forEach(slide => {
-          let item = document.createElement('div')
-          item.className = "slider-item";
-          item.innerHTML = `<img class="w-100"
+      let item = document.createElement('div')
+      item.className = "slider-item";
+      item.innerHTML = `<img class="w-100"
           src="${slide}"
           alt="">`;
-          sliderContainer.appendChild(item)
-        })
-        changeSlide(0)
-        timer = setInterval(function () {
-          slideIndex++;
-          changeSlide(slideIndex);
-        }, duration);
-      }
+      sliderContainer.appendChild(item)
+    })
+    changeSlide(0)
+    timer = setInterval(function () {
+      slideIndex++;
+      changeSlide(slideIndex);
+    }, duration);
   }
+  else {
+    alert('Minimum slider time is 1000ms or 1s')
+  }
+}
 
 // change slider index 
 const changeItem = index => {
@@ -110,14 +113,19 @@ const changeSlide = (index) => {
 
   items[index].style.display = "block"
 }
-
+const search = document.getElementById('search');
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
-  const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
 })
+
+search.addEventListener("keypress", function (event) {
+  event.preventDefault();
+  if (event.key == 'Enter')
+    searchBtn.click();
+});
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
